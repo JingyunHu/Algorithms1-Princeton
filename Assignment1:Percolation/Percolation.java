@@ -1,6 +1,6 @@
 /******************************************************************************
  *  Compilation:  javac-algs4 Percolation.java
- *  Execution:    
+ *  Execution:    No main method. I only verified via unit testing.
  *
  *  Percolation data type.
  * 
@@ -216,6 +216,4 @@ public class Percolation {
     public boolean percolates() {
         return weightedQuickFind.connected(topRowSite, bottomRowSite);
     }
-    /* public static void main(String[] args) {
-    }*/
 }

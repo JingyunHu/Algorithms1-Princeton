@@ -47,19 +47,16 @@ public class Percolation {
         site = new boolean[n][n];
         rowColSize = n;
         // Mark all sites as not connected
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
+        for (int i = 0; i < rowColSize; i++) {
+            for (int j = 0; j < rowColSize; j++) {
                 site[i][j] = false;
             }
         }
         numOpenSites = 0;
-        topRowOpen = bottomRowOpen = false;
-        topRowSite = (rowColSize - 1) * (rowColSize - 1) + 1;
+        topRowOpen = false;
+        bottomRowOpen = false;
+        topRowSite = (rowColSize * rowColSize);
         bottomRowSite = topRowSite + 1;
-        for (int i = 0; i < rowColSize; i++) {
-            weightedQuickFind.union(i, topRowSite); // Connect the last but one to all top sites.
-            weightedQuickFind.union(rowColSize - i, bottomRowSite); // Connect the last one to all bottom sites.
-        }
     }
     
     /**
@@ -71,8 +68,8 @@ public class Percolation {
      * 
      * @return Index in the weighted quick-find union array.
      */
-    private int getCurrentSite(int row, int col) {
-        return ((rowColSize - 1) * row + col);
+    private int getSite(int row, int col) {
+        return ((rowColSize * row) + col);
     }
         
     /**
@@ -84,62 +81,74 @@ public class Percolation {
      * 
      * @param row The row this site is located in.
      * @param col The column this site is located at.
+     * @throws IndexOutOfBoundsException if {@code row <= 0 || row > rowColSize)}
+     *         or (col <= 0 || col > rowColSize)).
      */
     public void open(int row, int col) {
-        int currentSite, leftNeighbor, rightNeighbor, upNeighbor, downNeighbor;
+        int currentSite, rowIndex, colIndex, leftNeighbor, rightNeighbor, upNeighbor, downNeighbor;
         
-        currentSite = getCurrentSite(row, col);
-        if (site[row][col]) {
+        if ((row <= 0 || row > rowColSize) || (col <= 0 || col > rowColSize)) { 
+            throw new IndexOutOfBoundsException("row/column (" + row + "/" + col
+                                                + ") out of bounds " + "(1 - "
+                                                + rowColSize + ").");
+        }
+        rowIndex = row - 1;
+        colIndex = col - 1;
+        currentSite = getSite(rowIndex, colIndex);
+
+        if (site[rowIndex][colIndex]) {
             return;
         }
         numOpenSites++;
             
         // Mark this site Open.
-        site[row][col] = true;
+        site[rowIndex][colIndex] = true;
         // Connect to the neighbor on the left.
-        if (col > 0) {
-            leftNeighbor = (rowColSize - 1) * row + (col - 1);
-            if (site[row][col - 1]) {
+        if (colIndex > 0) {
+            leftNeighbor = getSite(rowColSize, colIndex - 1);
+            if (site[rowIndex][colIndex - 1]) {
                 weightedQuickFind.union(currentSite, leftNeighbor);
             }
         }
         // Connect to the neighbor on the right.
-        if (col < rowColSize - 1) {
-            rightNeighbor = (rowColSize - 1) * row + (col + 1);
-            if (site[row][col + 1]) {
+        if (colIndex < rowColSize - 1) {
+            rightNeighbor = getSite(rowColSize, colIndex + 1);
+            if (site[rowIndex][colIndex + 1]) {
                 weightedQuickFind.union(currentSite, rightNeighbor);
             }
         }
         // Connect to the neighbor above.
-        if (row > 0) {
-            upNeighbor = (rowColSize - 1) * (row - 1) + col;
-            if (site[row - 1][col]) {
+        if (rowIndex > 0) {
+            upNeighbor = getSite(rowIndex - 1, colIndex);
+            if (site[rowIndex - 1][colIndex]) {
                 weightedQuickFind.union(currentSite, upNeighbor);
             }
         }
         // Connect to the neighbor below.
-        if (row < rowColSize - 1) {
-            downNeighbor = (rowColSize - 1) * row + col;
-            if (site[row + 1][col]) {
+        if (rowIndex < rowColSize - 1) {
+            downNeighbor = getSite(rowIndex + 1, colIndex);
+            if (site[rowIndex + 1][colIndex]) {
                 weightedQuickFind.union(currentSite, downNeighbor);
             }
         }
         
         // Open the top or bottom row if it wasn't open already if a site in the
         // first site in top or bottom row just opened up.
-        if (row == 0) {
+        if (rowIndex == 0) {
             if (!topRowOpen) {
                 topRowOpen = true;
                 for (int i = 0; i < rowColSize; i++) {
-                    weightedQuickFind.union(i, topRowSite); // Connect the last but one to all top sites.
+                    // Connect the last but one to all top sites.
+                    weightedQuickFind.union(getSite(0, i), topRowSite); 
                 }
             }
         }
-        if (row == rowColSize) {
+        if (rowIndex == (rowColSize - 1)) {
             if (!bottomRowOpen) {
                 bottomRowOpen = true;
                 for (int i = 0; i < rowColSize; i++) {
-                    weightedQuickFind.union(i, bottomRowSite); // Connect the last one to all bottom sites.
+                    // Connect the last one to all bottom sites.
+                    weightedQuickFind.union(getSite(rowColSize - 1, i), bottomRowSite);
                 }
             }
         }           
@@ -152,13 +161,16 @@ public class Percolation {
      * @param col The column this site is located at.
      * 
      * @return {@code True} if the site is open, {@code false} otherwise.
+     * @throws IndexOutOfBoundsException if {@code row <= 0 || row > rowColSize)}
+     *         or (col <= 0 || col > rowColSize)).
      */
     public boolean isOpen(int row, int col) {
-        int currentSite;
-        
-        currentSite = getCurrentSite(row, col);
-
-        return site[row][col];
+        if ((row <= 0 || row > rowColSize) || (col <= 0 || col > rowColSize)) { 
+            throw new IndexOutOfBoundsException("row/column (" + row + "/" + col
+                                                + ") out of bounds " + "(1 - "
+                                                + rowColSize + ").");
+        }
+        return site[row - 1][col - 1];
     }
     
    /**
@@ -170,11 +182,19 @@ public class Percolation {
      * 
      * @return {@code True} if the site is open and connected to one of the top
      *         sites, {@code false} otherwise.
+     * @throws IndexOutOfBoundsException if {@code row <= 0 || row > rowColSize)}
+     *         or (col <= 0 || col > rowColSize)).
      */
     public boolean isFull(int row, int col) {
         int currentSite;
         
-        currentSite = getCurrentSite(row, col);
+        if ((row <= 0 || row > rowColSize) || (col <= 0 || col > rowColSize)) { 
+            throw new IndexOutOfBoundsException("row/column (" + row + "/" + col
+                                                + ") out of bounds " + "(1 - "
+                                                + rowColSize + ").");
+        }
+        currentSite = getSite(row - 1, col - 1);
+        
         return weightedQuickFind.connected(currentSite, topRowSite);
     }
     

@@ -1,3 +1,10 @@
+/******************************************************************************
+ * Run: Open both Percolation.java and PercolationTest.java in DrJava and click
+ *      Test.
+ *
+ *  Unit tests for percolation data type.
+ * 
+ ******************************************************************************/
 import junit.framework.TestCase;
 
 /**
@@ -44,14 +51,47 @@ public class PercolationTest extends TestCase {
     }
     
     /**
-     * 
+     * Open a grid with size 1 and verify that it percolates as soon as that 
+     * site is opened.
      */
     public void testPercolationSystemSizeOne() {
         Percolation percolation;
         
         percolation = new Percolation(1);
         assertFalse(percolation.percolates());
-        percolation.open(0, 0);
+        percolation.open(1, 1);
         assertTrue(percolation.percolates());
+    }
+    
+    /**
+     * Open a grid with size 2 and verify that it percolates as soon as that 
+     * site is opened.
+     */
+    public void testPercolationSystemSizeTwo() {
+        Percolation percolation;
+        
+        percolation = new Percolation(2);
+        assertFalse(percolation.percolates());
+        percolation.open(1, 1);
+        assertFalse(percolation.percolates());
+        percolation.open(2, 2);
+        assertFalse(percolation.percolates());
+        percolation.open(1, 2);
+        assertTrue(percolation.percolates());
+    }
+    
+    /**
+     * Test the {@code open} method with illegal args.
+     */
+    public void testPercolationOpenWithOutOfBound() {
+        Percolation percolation;
+        
+        percolation = new Percolation(2);
+        try {
+            percolation.open(2, 0);
+            fail();
+        } catch (final IndexOutOfBoundsException e) {
+            assertEquals("row/column (2/0) out of bounds (1 - 2).", e.getMessage());
+        }
     }
 }

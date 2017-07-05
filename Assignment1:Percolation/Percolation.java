@@ -10,7 +10,7 @@ import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 /**
  * The {@code Percolation} class represents a <em>data type</em> for modelling
- * percolation system as defined at <a href="http://coursera.cs.princeton.edu/algs4/assignments/percolation.html"> Programming Assignment 1: Percolation </a>
+ * percolation system as defined at <a href="http://coursera.cs.princeton.edu/algs4/assignments/percolation.html">Programming Assignment 1: Percolation</a>
  * <p>
  * {@code Percolation} class is implemented using {@code WeightedQuickUnionUF}
  * class. Each site in the {@code n * n} grid is represented on the  {@code WeightedQuickUnionUF}
@@ -105,15 +105,17 @@ public class Percolation {
         site[rowIndex][colIndex] = true;
         // Connect to the neighbor on the left.
         if (colIndex > 0) {
-            leftNeighbor = getSite(rowColSize, colIndex - 1);
+            leftNeighbor = getSite(rowIndex, colIndex - 1);
             if (site[rowIndex][colIndex - 1]) {
+                // System.out.println(currentSite + " - left " + leftNeighbor);
                 weightedQuickFind.union(currentSite, leftNeighbor);
             }
         }
         // Connect to the neighbor on the right.
         if (colIndex < rowColSize - 1) {
-            rightNeighbor = getSite(rowColSize, colIndex + 1);
+            rightNeighbor = getSite(rowIndex, colIndex + 1);
             if (site[rowIndex][colIndex + 1]) {
+                // System.out.println(currentSite + " - right " + rightNeighbor);
                 weightedQuickFind.union(currentSite, rightNeighbor);
             }
         }
@@ -121,6 +123,7 @@ public class Percolation {
         if (rowIndex > 0) {
             upNeighbor = getSite(rowIndex - 1, colIndex);
             if (site[rowIndex - 1][colIndex]) {
+                // System.out.println(currentSite + " - up" + upNeighbor);
                 weightedQuickFind.union(currentSite, upNeighbor);
             }
         }
@@ -128,6 +131,7 @@ public class Percolation {
         if (rowIndex < rowColSize - 1) {
             downNeighbor = getSite(rowIndex + 1, colIndex);
             if (site[rowIndex + 1][colIndex]) {
+                // System.out.println(currentSite + " - down" + downNeighbor);
                 weightedQuickFind.union(currentSite, downNeighbor);
             }
         }

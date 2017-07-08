@@ -1,6 +1,7 @@
 /******************************************************************************
- *  Compilation:  javac-algs4 PercolationStats.java
- *  Execution:    No main method. I only verified via unit testing.
+ *  Compilation:  javac-algs4 Percolation.java
+ *                javac-algs4 PercolationStats.java
+ *  Execution:    java-algs4 PercolationStats 20 10
  *
  *  PercolationStats data type.
  * 
@@ -39,7 +40,15 @@ public class PercolationStats {
         return percolationThreshold;
     }
     
-    public PercolationStats(int n, int trials) {    // perform trials independent experiments on an n-by-n grid
+    /**
+     * Find the percolation threshold {@code trials} # of times on an n-by-n grid.
+     * 
+     * @param n The size of the symmetric grid's single dimension.
+     * @param trials The # of times computation of threshold is requested.
+     * 
+     * @throws IllegalArgumentException if either {@code n ≤ 0} or {@code trials ≤ 0}.
+     */
+    public PercolationStats(int n, int trials) {
         trialResults = new double[trials];
         
         if (n <= 0 || trials <= 0) {
@@ -56,13 +65,31 @@ public class PercolationStats {
         
         
     }
-    public double mean() {                         // sample mean of percolation threshold
+    
+    /**
+     * Compute the sample mean of the percolation threshold.
+     * 
+     * @return The mean of all the percolation computations for this grid.
+     */
+    public double mean() {
         return StdStats.mean(trialResults);
     }
-    public double stddev() {                       // sample standard deviation of percolation threshold
+    
+    /**
+     * Compute the standard deviation of the percolation threshold.
+     * 
+     * @return The standard deviation of all the percolation computations for this grid.
+     */
+    public double stddev() {
         return StdStats.stddev(trialResults);
     }
-    public double confidenceLo() {                 // low  endpoint of 95% confidence interval
+    
+    /**
+     * Compute the lower endpoint of the 95% confidence interval.
+     * 
+     * @return Low endpoint of the 95% confidence interval.
+     */
+    public double confidenceLo() {
         double percolationMean, percolationStdDev, lowEndpoint;
         
         percolationMean = mean();
@@ -71,7 +98,13 @@ public class PercolationStats {
         
         return lowEndpoint;
     }
-    public double confidenceHi() {                  // high endpoint of 95% confidence interval
+    
+    /**
+     * Compute the high endpoint of the 95% confidence interval.
+     * 
+     * @return High endpoint of the 95% confidence interval.
+     */
+    public double confidenceHi() {
         double percolationMean, percolationStdDev, hiEndpoint;
         
         percolationMean = mean();
@@ -82,7 +115,20 @@ public class PercolationStats {
     }
 
     public static void main(String[] args) {
-        PercolationStats percolationStats = new PercolationStats(202, 10);
+        int n, trials;
+        PercolationStats percolationStats;
+        
+        if (args.length == 2) {
+            n = Integer.parseInt(args[0]);
+            trials = Integer.parseInt(args[1]);
+        } else {
+            throw new IllegalArgumentException("You must run this program with two command-line " +
+                                               "arguments - n and trials. The first argument (n) controls " +
+                                               "the size of the n-by-n grid while trials represent " +
+                                               "the # of independent computational experiments " +
+                                               "on this grid to find the percolation threshold.");
+        }
+        percolationStats = new PercolationStats(n, trials);
         
         System.out.println("mean                    = " + percolationStats.mean());
         System.out.println("stddev                  = " + percolationStats.stddev());

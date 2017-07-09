@@ -18,28 +18,10 @@ import edu.princeton.cs.algs4.StdStats;
  * @author Ashutosh Grewal
  */
 public class PercolationStats {
+    // private static final int SEED = 700;
     private double[] trialResults;
-    private static final int SEED = 700;
     private int totSites;
-    
-    private double findPercolationThreshold (int n, int trial_num) {
-        Percolation percolation;
-        int row, col;
-        double percolationThreshold;
-        
-        percolation = new Percolation(n);
-        totSites = n * n;
-        while (!percolation.percolates()) {
-            row = StdRandom.uniform(1, 1 + n);
-            col = StdRandom.uniform(1, 1 + n);
-            //System.out.println("row = " + row + "col = " + col);
-            percolation.open(row, col);
-        }
-        percolationThreshold = (double)percolation.numberofOpenSites()/ totSites;
-        
-        return percolationThreshold;
-    }
-    
+         
     /**
      * Find the percolation threshold {@code trials} # of times on an n-by-n grid.
      * 
@@ -57,13 +39,38 @@ public class PercolationStats {
                                                + Integer.toString(n) + " and trails = "
                                                + Integer.toString(trials) + ".");
         }
-        StdRandom.setSeed(SEED);
+        // StdRandom.setSeed(SEED);
         for (int i = 0; i < trialResults.length; i++) {
-            trialResults[i] = findPercolationThreshold(n, i);
+            trialResults[i] = findPercolationThreshold(n);
             // System.out.println("Trial " + i + " = " + trialResults[i]);
         }
         
         
+    }
+    
+    /**
+     * Find the percolation threshold for a grid of size {@code n}-by-{@code n}.
+     * 
+     * @param n The size of dimension of the symmetric grid.
+     * 
+     * @return The percolation threshold for this run.
+     */
+    private double findPercolationThreshold(int n) {
+        Percolation percolation;
+        int row, col;
+        double percolationThreshold;
+        
+        percolation = new Percolation(n);
+        totSites = n * n;
+        while (!percolation.percolates()) {
+            row = StdRandom.uniform(1, 1 + n);
+            col = StdRandom.uniform(1, 1 + n);
+            // System.out.println("row = " + row + "col = " + col);
+            percolation.open(row, col);
+        }
+        percolationThreshold = (double) percolation.numberOfOpenSites() / totSites;
+        
+        return percolationThreshold;
     }
     
     /**

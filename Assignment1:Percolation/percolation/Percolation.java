@@ -89,7 +89,7 @@ public class Percolation {
         int currentSite, rowIndex, colIndex, leftNeighbor, rightNeighbor, upNeighbor, downNeighbor;
         
         if ((row <= 0 || row > rowColSize) || (col <= 0 || col > rowColSize)) { 
-            throw new IllegalArgumentException("row/column (" + row + "/" + col
+            throw new IndexOutOfBoundsException("row/column (" + row + "/" + col
                                                 + ") out of bounds " + "(1 - "
                                                 + rowColSize + ").");
         }
@@ -108,7 +108,7 @@ public class Percolation {
         if (colIndex > 0) {
             leftNeighbor = getSite(rowIndex, colIndex - 1);
             if (site[rowIndex][colIndex - 1]) {
-                // System.out.println(currentSite + " - left " + leftNeighbor);
+                 System.out.println(currentSite + " - left " + leftNeighbor);
                 weightedQuickFind.union(currentSite, leftNeighbor);
             }
         }
@@ -116,7 +116,7 @@ public class Percolation {
         if (colIndex < rowColSize - 1) {
             rightNeighbor = getSite(rowIndex, colIndex + 1);
             if (site[rowIndex][colIndex + 1]) {
-                // System.out.println(currentSite + " - right " + rightNeighbor);
+                 System.out.println(currentSite + " - right " + rightNeighbor);
                 weightedQuickFind.union(currentSite, rightNeighbor);
             }
         }
@@ -124,7 +124,7 @@ public class Percolation {
         if (rowIndex > 0) {
             upNeighbor = getSite(rowIndex - 1, colIndex);
             if (site[rowIndex - 1][colIndex]) {
-                // System.out.println(currentSite + " - up" + upNeighbor);
+                 System.out.println(currentSite + " - up" + upNeighbor);
                 weightedQuickFind.union(currentSite, upNeighbor);
             }
         }
@@ -132,7 +132,7 @@ public class Percolation {
         if (rowIndex < rowColSize - 1) {
             downNeighbor = getSite(rowIndex + 1, colIndex);
             if (site[rowIndex + 1][colIndex]) {
-                // System.out.println(currentSite + " - down" + downNeighbor);
+                 System.out.println(currentSite + " - down" + downNeighbor);
                 weightedQuickFind.union(currentSite, downNeighbor);
             }
         }
@@ -171,7 +171,7 @@ public class Percolation {
      */
     public boolean isOpen(int row, int col) {
         if ((row <= 0 || row > rowColSize) || (col <= 0 || col > rowColSize)) { 
-            throw new IllegalArgumentException("row/column (" + row + "/" + col
+            throw new IndexOutOfBoundsException("row/column (" + row + "/" + col
                                                 + ") out of bounds " + "(1 - "
                                                 + rowColSize + ").");
         }
@@ -194,14 +194,14 @@ public class Percolation {
         int currentSite;
         
         if ((row <= 0 || row > rowColSize) || (col <= 0 || col > rowColSize)) { 
-            throw new IllegalArgumentException("row/column (" + row + "/" + col
+            throw new IndexOutOfBoundsException("row/column (" + row + "/" + col
                                                 + ") out of bounds " + "(1 - "
                                                 + rowColSize + ").");
         }
         // If the site is not Open, then it is not Full.
         if (!site[row - 1][col - 1]) {
             return false;
-        }  
+        }           
         currentSite = getSite(row - 1, col - 1);
         
         return weightedQuickFind.connected(currentSite, topRowSite);

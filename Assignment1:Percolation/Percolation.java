@@ -23,6 +23,10 @@ import edu.princeton.cs.algs4.WeightedQuickUnionUF;
  * <em>Top row site</em> is connected to the <em>Bottom row site </em>.
  * 
  * @author Ashutosh Grewal
+ * 
+ * @see <a href="http://coursera.cs.princeton.edu/algs4/checklists/percolation.html">Checklist: Percolation</a>
+ *      This implementation suffers from the backwash problem described in the 
+ *      FAQ section of the checklist.
  */
 public class Percolation {
     private boolean[][] site;
@@ -82,8 +86,8 @@ public class Percolation {
      * 
      * @param row The row this site is located in.
      * @param col The column this site is located at.
-     * @throws IndexOutOfBoundsException if {@code row <= 0 || row > rowColSize)}
-     *         or (col <= 0 || col > rowColSize)).
+     * @throws IndexOutOfBoundsException if {@code (row <= 0 || row > rowColSize)
+     *         or (col <= 0 || col > rowColSize)}.
      */
     public void open(int row, int col) {
         int currentSite, rowIndex, colIndex, leftNeighbor, rightNeighbor, upNeighbor, downNeighbor;
@@ -166,8 +170,8 @@ public class Percolation {
      * @param col The column this site is located at.
      * 
      * @return {@code True} if the site is open, {@code false} otherwise.
-     * @throws IndexOutOfBoundsException if {@code row <= 0 || row > rowColSize)}
-     *         or (col <= 0 || col > rowColSize)).
+     * @throws IndexOutOfBoundsException if {@code (row <= 0 || row > rowColSize)
+     *         or (col <= 0 || col > rowColSize)}.
      */
     public boolean isOpen(int row, int col) {
         if ((row <= 0 || row > rowColSize) || (col <= 0 || col > rowColSize)) { 
@@ -187,8 +191,8 @@ public class Percolation {
      * 
      * @return {@code True} if the site is open and connected to one of the top
      *         sites, {@code false} otherwise.
-     * @throws IndexOutOfBoundsException if {@code row <= 0 || row > rowColSize)}
-     *         or (col <= 0 || col > rowColSize)).
+     * @throws IndexOutOfBoundsException if {@code row <= 0 || row > rowColSize)
+     *         or (col <= 0 || col > rowColSize)}.
      */
     public boolean isFull(int row, int col) {
         int currentSite;

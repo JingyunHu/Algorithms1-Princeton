@@ -199,7 +199,7 @@ public class Deque<Item> implements Iterable<Item> {
             Item item;
             
             if (current == null) {
-                throw new NoSuchElementException();
+                throw new NoSuchElementException("No more items to return");
             }
             item = current.item;
             current = current.next;

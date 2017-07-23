@@ -1,12 +1,13 @@
 /******************************************************************************
  *  Compilation:  javac-algs4 Dequeue.java
- *  Execution:    No main method. I only verified via unit testing.
+ *  Execution:    java-algs4.
  *
  *  Deque data type.
  * 
  ******************************************************************************/
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import edu.princeton.cs.algs4.StdOut;
 
 /**
  * The {@code Deque} class is a generic <em>data type</em> that supports adding
@@ -70,6 +71,7 @@ public class Deque<Item> implements Iterable<Item> {
             throw new IllegalArgumentException("Null item can't be added");
         }
         newNode = new Node();
+        newNode.item = item;
         newNode.next = head;
         newNode.prev = null;
         if (head == null) {
@@ -95,6 +97,7 @@ public class Deque<Item> implements Iterable<Item> {
             throw new IllegalArgumentException("Null item can't be added");
         }
         newNode = new Node();
+        newNode.item = item;
         newNode.next = null;
         if (head == null) {
             newNode.prev = null;
@@ -212,7 +215,35 @@ public class Deque<Item> implements Iterable<Item> {
         }
     }
     
-    // unit testing (optional)
+    /**
+     * Some simple unit testing. (Lack of time always equals to skipping unit testing).
+     * 
+     * @param args The command-line arguments.
+     */
     public static void main(String[] args) {
+        Deque<String> deque = new Deque<String>();
+        
+        deque.addFirst("fourth");
+        deque.addFirst("third");
+        deque.addFirst("second");
+        StdOut.printf("Size of deque = %d. Is it empty? %s\n", deque.size(), deque.isEmpty() ? "Yes" : "No");
+        for (String s : deque) {
+            StdOut.println(s);
+        }
+        
+        deque.removeLast();
+        deque.removeFirst();
+        StdOut.printf("Size of deque = %d.  Is it empty? %s\n", deque.size(), deque.isEmpty() ? "Yes" : "No");
+        for (String s : deque) {
+            StdOut.println(s);
+        }
+        
+        deque.removeLast();
+        StdOut.printf("Size of deque = %d.  Is it empty? %s\n", deque.size(), deque.isEmpty() ? "Yes" : "No");
+        for (String s : deque) {
+            StdOut.println(s);
+        }
+        
+        deque.removeFirst(); // Will throw an exception.
     }
 }

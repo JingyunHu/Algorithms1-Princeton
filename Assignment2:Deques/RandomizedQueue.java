@@ -9,6 +9,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import edu.princeton.cs.algs4.StdRandom;
 import edu.princeton.cs.algs4.StdOut;
+import java.util.Arrays; //akg
 
 /**
  * The {@code RandomizedQueue} class is similar to a stack or queue, except that
@@ -19,9 +20,9 @@ import edu.princeton.cs.algs4.StdOut;
  */
     
 public class RandomizedQueue<Item> implements Iterable<Item> {
+    private static final int INIT_ARR_SIZE = 2;
     private Item[] arr;
     private int size;
-    private static final int INIT_ARR_SIZE = 2;
     
     /**
      * Construct an empty {@code RandomizedQueue} by initializing internal variables.
@@ -169,14 +170,16 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
             if (shuffled) {
                 return;
             }
-            
+            shuffled = true;
             // This array contains indexes corresponding to the items in the arr.
             for (int i = 0; i < size; i++) {
                 shuffleArr[i] = i;
             }
         
             // Randmize the indexes.
+            System.out.println(Arrays.toString(shuffleArr));//akg
             StdRandom.shuffle(shuffleArr);
+            System.out.println(Arrays.toString(shuffleArr));//akg
         }
         
         
@@ -190,7 +193,8 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
             }
             shuffleArray();
             
-            return arr[index++];
+            // Pick the next index to visit from the shuffled array.
+            return arr[shuffleArr[index++]];
         }
         
         public void remove() {
@@ -206,15 +210,15 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     public static void main(String[] args) {
         RandomizedQueue<String> randomizedQueue = new RandomizedQueue<String>();
         
-        randomizedQueue.enqueue("fourth");
-        randomizedQueue.enqueue("third");
+        randomizedQueue.enqueue("first");
+        randomizedQueue.enqueue("second");
         StdOut.printf("Size of deque = %d. Is it empty? %s\n",
                       randomizedQueue.size(), randomizedQueue.isEmpty() ? "Yes" : "No");
         for (String s : randomizedQueue) {
             StdOut.println(s);
         }
         
-        randomizedQueue.enqueue("second");
+        randomizedQueue.enqueue("thrid");
         StdOut.printf("Size of deque = %d. Is it empty? %s\n",
                       randomizedQueue.size(), randomizedQueue.isEmpty() ? "Yes" : "No");
         for (String s : randomizedQueue) {

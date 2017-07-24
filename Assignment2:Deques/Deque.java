@@ -1,6 +1,6 @@
 /******************************************************************************
  *  Compilation:  javac-algs4 Dequeue.java
- *  Execution:    java-algs4.
+ *  Execution:    java-algs4 Dequeue.
  *
  *  Deque data type.
  * 

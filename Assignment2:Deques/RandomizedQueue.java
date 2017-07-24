@@ -1,6 +1,6 @@
 /******************************************************************************
- *  Compilation:  javac-algs4 RandomizedQeueue.java
- *  Execution:    No main method. I only verified via unit testing.
+ *  Compilation:  javac-algs4 RandomizedQueue.java
+ *  Execution:    java-algs4 RandomizedQueue
  *
  *  Deque data type.
  * 

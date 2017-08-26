@@ -9,7 +9,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import edu.princeton.cs.algs4.StdRandom;
 import edu.princeton.cs.algs4.StdOut;
-import java.util.Arrays; //akg
+//import java.util.Arrays; akg
 
 /**
  * The {@code RandomizedQueue} class is similar to a stack or queue, except that
@@ -177,9 +177,9 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
             }
         
             // Randmize the indexes.
-            System.out.println(Arrays.toString(shuffleArr));//akg
+            //System.out.println(Arrays.toString(shuffleArr));//akg
             StdRandom.shuffle(shuffleArr);
-            System.out.println(Arrays.toString(shuffleArr));//akg
+            //System.out.println(Arrays.toString(shuffleArr));//akg
         }
         
         
